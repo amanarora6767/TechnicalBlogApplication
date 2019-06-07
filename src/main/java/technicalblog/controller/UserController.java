@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import technicalblog.model.Post;
 import technicalblog.model.User;
+import technicalblog.model.UserProfile;
 import technicalblog.service.PostService;
 import technicalblog.service.UserService;
 
@@ -46,9 +47,19 @@ public class UserController {
         model.addAttribute("posts", posts);
         return "index";
     }
+    @RequestMapping(value="users/registration" , method = RequestMethod.GET )
+    public String registration(Model model) {
+        User user = new User();
+        UserProfile profile = new UserProfile();
+        user.setProfile(profile);
 
-    @RequestMapping(value = "users/registration", method=RequestMethod.POST)
+        model.addAttribute("User", user);
+
+        return "users/registration";
+    }
+    @RequestMapping(value = "users/registration", method = RequestMethod.POST)
     public String registerUser(User user) {
+        userService.registerUser(user);
         return "users/login";
     }
 
